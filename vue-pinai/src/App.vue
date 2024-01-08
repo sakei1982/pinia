@@ -1,22 +1,25 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+//导入useCounterStore方法
+//vue3导入方法要加@
+import { useCounterStore } from '@/stores/counter.js'
+import { onMounted } from 'vue';
+
+//执行方法得到实例对象
+const countStore = useCounterStore()
+console.log(countStore);
+
+onMounted(()=>{
+  countStore.loadList()
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <button @click="countStore.increment">{{ countStore.count }}</button>
+ {{ countStore.doubleCount }}
+ <ul v-for="item in countStore.list" :key="item.id">
+   <li>{{ item.name }}</li> 
+ </ul>
 </template>
-
 <style scoped>
 header {
   line-height: 1.5;
